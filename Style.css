@@ -1,0 +1,78 @@
+<style>
+  html, body, #container_general{
+    height: calc (100vh - 64px);
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font: 13px Helvetica, Arial;
+  }
+  #results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+  }
+  .logo {
+    height: 55px;
+  }
+  #aside_containter{
+    overflow: auto;
+    max-height: calc(100vh - 84px);
+  }
+  /* toastjs */
+  .alert-hide {
+    display: none;
+  }
+  .alert-toast {
+    position: fixed;
+    bottom: 10px;
+  }
+  .alert {
+    padding: 15px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  .alert {
+      border-radius: 2px;
+      top: 0;
+      width: auto;
+      clear: both;
+      margin-top: 10px;
+      position: relative;
+      max-width: 100%;
+      height: auto;
+      min-height: 48px;
+      line-height: 1.5em;
+      background-color: #323232;
+      padding: 10px 25px;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #fff;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+  }
+
+  .alert-danger {
+    border-color: #a94442;
+    border-width: 5px;
+  }
+  .alert-success{
+    border-color:#3c763d;
+    border-width: 5px;
+  }
+  /* fin de toastjs*/
+</style>
