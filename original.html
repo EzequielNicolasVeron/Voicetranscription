@@ -1,11 +1,172 @@
-    dictados =
-    [
-      ['Fulano','Martes 11 Diciembre 2019'],
-      ['Mengano','Viernes 23 Abril 2020']
-    ]  
-    enviados = [
-      ['Fulano','Martes 11 Diciembre 2019']
-    ]
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<title>Estudio Filippin | Transcripci&oacute;n de informes</title>
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/5ba6f8bf3b.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<!--style>
+  html, body, #container_general{
+    height: calc (100vh - 64px);
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font: 13px Helvetica, Arial;
+  }
+  #results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+  }
+  .logo {
+    height: 55px;
+  }
+  #aside_containter{
+    overflow: auto;
+    max-height: calc(100vh - 84px);
+  }
+  /* toastjs */
+  .alert-hide {
+    display: none;
+  }
+  .alert-toast {
+    position: fixed;
+    bottom: 10px;
+  }
+  .alert {
+    padding: 15px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  .alert {
+      border-radius: 2px;
+      top: 0;
+      width: auto;
+      clear: both;
+      margin-top: 10px;
+      position: relative;
+      max-width: 100%;
+      height: auto;
+      min-height: 48px;
+      line-height: 1.5em;
+      background-color: #323232;
+      padding: 10px 25px;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #fff;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+  }
+
+  .alert-danger {
+    border-color: #a94442;
+    border-width: 5px;
+  }
+  .alert-success{
+    border-color:#3c763d;
+    border-width: 5px;
+  }
+  /* fin de toastjs*/
+</style-->
+</head>
+<body>
+  <nav class = "white black-text">
+   <div class="nav-wrapper black-text">
+     <a href="#" class="brand-logo black-text hide-on-med-and-down"></a>
+     <a href="#" class="brand-logo black-text center">TRANSCRIPCION DE INFORMES</a>
+   </div>
+ </nav>
+ <div class = "row" id = "container_general">
+   <div class = "col col m8 l8 s12">
+    <div class="row">
+      <div class = "col s12">
+        <div class="card-panel white grey darken-1-text" id="results">
+          <span id="final_span" class="final">Toque el micr&oacute;fono para comenzar con el dictado</span>
+          <span id="interim_span" class="interim"></span>
+          <p>
+        </div>
+      </div>
+    </div>
+    <div class = "row">
+      <div class="col s12 ">
+        <button id="start_button" class = "btn-floating btn-large waves-effect waves-light red right tooltipped" data-position="left" data-delay="50" data-tooltip="Iniciar o terminar dictado" onclick="startButton(event)"><i id = "start_button_icon" class = "fa fa-microphone"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class = "col s12">
+        <div class="input-field col s12">
+            <i class="fa fa-pencil prefix"></i>
+            <textarea id="transcripcion" class="materialize-textarea"></textarea>
+            <label for="transcripcion">Correcci&oacute;n de dictado actual</label>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class = "col s12 ">
+        <button id="accept" class="btn-floating btn-large waves-effect waves-light green right tooltipped" data-position="left" data-delay="50" data-tooltip="Correcci&oacute;n de dictado finalizada" onclick="checkedEnd()"><i class = "fa fa-check"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class = "col s12">
+        <div class="input-field col s12">
+            <i class="fa fa-edit prefix"></i>
+            <textarea id="transcripcion_final" class="materialize-textarea"></textarea>
+            <label for="transcripcion_final">Correcci&oacute;n de documento completo</label>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class = "col s12 ">
+        <div class="fixed-action-btn horizontal click-to-toggle" style = "position: relative; right: 0px;">
+          <a class="btn-floating btn-large light-blue right tooltipped" data-position="top" data-delay="50" data-tooltip="Copiar texto corregido" onclick = "copyButton()">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </div>
+<!--        <button id="email_button" class="btn-floating btn-large waves-effect waves-light light-blue right tooltipped" data-position="left" data-delay="50" data-tooltip="Enviar por correo electr&oacute;nico" onclick="emailButton()"><i class = "fa fa-send"></i></button>
+        <button id="copy_button" class="btn-floating btn-large waves-effect waves-light light-blue right tooltipped" data-position="left" data-delay="50" data-tooltip="Copiar texto corregido" onclick="copyButton()"><i class = "fa fa-clipboard"></i></button>
+-->
+      </div>
+    </div>
+  </div>
+  <div class = "col m4 l4 s12" id = "aside_containter">
+    <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header tooltipped light-blue darken-3 white-text" data-position="left" data-delay="50" data-tooltip="Haga click para expandir"><i class="fa fa-terminal"></i>Comandos de Voz</div>
+      <div class="collapsible-body">
+        <ul class = "collection" id = "commands_list"></ul>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header tooltipped light-blue darken-3 white-text" data-position="left" data-delay="50" data-tooltip="Haga click para expandir"><i class = "fa fa-user-md"></i>Abreviaturas m&eacute;dicas</div>
+      <div class="collapsible-body">
+        <ul class = "collection" id = "abrev_list"></ul>
+      </div>
+    </li>
+  </ul>
+
+  </div>
+</div>
+<div id = "alert-zone" class = "row alert-hide alert-toast">
+
+  <script>
+
     transformaciones =
     [
       ['signo coma',', '],
@@ -24,8 +185,8 @@
     ]
     abreviaturas =
     [
-        ['Esta lista se completará según su actividad','Lista'],
-       // ['biopsia', 'Bx ']
+        ['trombosis venosa profunda','T.V.P. '],
+        ['biopsia', 'Bx ']
     ]
     casos =
     [
@@ -273,19 +434,6 @@
         }
         return result;
     }
-    function menuDictadosEnviados(){
-      arrayLists =
-      [
-        [dictados,'historico_dictados'],
-        [enviados,'historico_enviados']
-      ]
-      for (array_item in arrayLists){
-        currentArray = arrayLists[array_item][0]
-        for (item in currentArray){
-          $("#"+arrayLists[array_item][1]).append($('<ul class = "collection-item"><div><b>'+currentArray[item][0]+'</b></div><span> "'+currentArray[item][1]+'"</span></ul>'))
-        }
-      }
-    }
     function listaComandos(){
       arrayLists =
       [
@@ -301,7 +449,6 @@
     }
     $(document).ready(function(){
       $('.tooltipped').tooltip({delay: 50});
-      menuDictadosEnviados()
       listaComandos()
       $('.collapsible').collapsible({
         accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -325,3 +472,5 @@
       $("#"+idToast).html('<div class="alert alert-'+((success)?'success':'danger')+'" role="alert"><span>'+message+'</span></div>');
     }
     /* fin de toastjs */
+  </script>
+<body>
